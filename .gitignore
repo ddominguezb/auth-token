@@ -1,11 +1,11 @@
 # Created by https://www.gitignore.io/api/java,java-web
 
-
 ### Java ###
 
 # Directories #
 /build/
 /bin/
+dist/
 target/
 
 # Compiled class files
@@ -22,7 +22,8 @@ target/
 
 
 # Package Files #
-*.jar
+*.exe
+## *.jar
 *.war
 *.nar
 *.ear
