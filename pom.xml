@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gcpglobal</groupId>
@@ -6,7 +7,7 @@
 	<version>2.0.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version>1.7</java-version>
+		<java-version>1.8</java-version>
 		<version.resteasy>3.0.18.Final</version.resteasy>
 		<version.jjwt>0.7.0</version.jjwt>
 		<spring.version>3.1.1.RELEASE</spring.version>
@@ -63,33 +64,34 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.1</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/jboss/jboss-common-jdbc-wrapper -->
 		<!-- https://mvnrepository.com/artifact/org.jboss.jbossas/jboss-as-connector -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.jboss.jbossas</groupId> -->
-<!-- 		    <artifactId>jboss-as-connector</artifactId> -->
-<!-- 		    <version>6.1.0.Final</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jboss.jbossas</groupId> -->
+		<!-- <artifactId>jboss-as-connector</artifactId> -->
+		<!-- <version>6.1.0.Final</version> -->
+		<!-- </dependency> -->
 
-<!-- https://mvnrepository.com/artifact/org.jboss.ironjacamar/ironjacamar-jdbc -->
-<dependency>
-    <groupId>org.jboss.ironjacamar</groupId>
-    <artifactId>ironjacamar-jdbc</artifactId>
-    <version>1.0.23.Final</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jboss.ironjacamar/ironjacamar-jdbc -->
+		<dependency>
+			<groupId>org.jboss.ironjacamar</groupId>
+			<artifactId>ironjacamar-jdbc</artifactId>
+			<version>1.4.10.Final</version>
+		</dependency>
+
 
 
 
