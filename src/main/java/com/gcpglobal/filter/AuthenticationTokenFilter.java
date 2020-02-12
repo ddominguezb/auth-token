@@ -109,7 +109,7 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									if (contextURI.equals(payloadURI)) {
 										LOG.info("URI valida!!!");
 										if (tokenDAO.actualizarCaducidadDeTokenUserJNDI(userToken.getIdUser(),timeOut)) {
-											LOG.error("Caducidad del Token actualizada ");
+											LOG.info("Caducidad del Token actualizada ");
 										} else {
 											LOG.error("Caducidad del Token SIN actualizar ");
 										}
