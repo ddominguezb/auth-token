@@ -269,7 +269,7 @@ public class UserTokenDAO {
 		TokenUserBean userToken = this.obtenerTokenUserJNDI(idUser);
 		if (userToken != null) {
 			boolean isNotExpired = ((Timestamp) userToken.getExpirationdate()).getTime() > System.currentTimeMillis();
-			isValid = token.equals(userToken.getToken()) && isNotExpired;
+			isValid = token != null && token.equals(userToken.getToken()) && isNotExpired;
 		}
 	
 		return isValid;
