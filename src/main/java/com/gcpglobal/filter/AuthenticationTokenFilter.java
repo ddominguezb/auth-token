@@ -113,9 +113,9 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 										// Check if more than 10 minutes have passed since the last update
 										if ( diff > 600000) {
 											if (tokenDAO.actualizarCaducidadDeTokenUserJNDI(userToken.getIdUser(),timeOut)) {
-												LOG.error("Caducidad del Token actualizada ");
+												LOG.info("Caducidad del Token actualizada ");
 											} else {
-												LOG.error("Caducidad del Token SIN actualizar ");
+												LOG.info("Caducidad del Token SIN actualizar ");
 											}
 										}
 									} else {
