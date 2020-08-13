@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class TokenUserBean {
 	private Boolean isValid;
 	private Timestamp expirationdate;
+	private Timestamp lastUpdate;
 	private String token;
 	private Integer idUserToken;
 	private Integer idUser;
@@ -21,6 +22,12 @@ public class TokenUserBean {
 	}
 	public void setExpirationdate(Timestamp expirationdate) {
 		this.expirationdate = expirationdate;
+	}
+	public Timestamp getLastUpdate() {
+		return lastUpdate;
+	}
+	public void setLastUpdate(Timestamp lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 	public String getToken() {
 		return token;

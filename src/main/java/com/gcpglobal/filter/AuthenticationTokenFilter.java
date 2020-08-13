@@ -107,11 +107,16 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									LOG.info("URI del payload:" + payloadURI);
 
 									if (contextURI.equals(payloadURI)) {
+										long diff = System.currentTimeMillis() - ((Timestamp)userToken.getLastUpdate()).getTime(); 
 										LOG.info("URI valida!!!");
-										if (tokenDAO.actualizarCaducidadDeTokenUserJNDI(userToken.getIdUser(),timeOut)) {
-											LOG.info("Caducidad del Token actualizada ");
-										} else {
-											LOG.error("Caducidad del Token SIN actualizar ");
+										// Update token in database only after 10 minutes since last update
+										// Check if more than 10 minutes have passed since the last update
+										if ( diff > 600000) {
+											if (tokenDAO.actualizarCaducidadDeTokenUserJNDI(userToken.getIdUser(),timeOut)) {
+												LOG.info("Caducidad del Token actualizada ");
+											} else {
+												LOG.info("Caducidad del Token SIN actualizar ");
+											}
 										}
 									} else {
 										LOG.error("Ruta inválida: ");

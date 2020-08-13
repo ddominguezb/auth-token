@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 import javax.naming.Context;
@@ -34,7 +35,7 @@ public class UserTokenDAO {
 			if (datasource != null) {
 				con = (WrappedConnectionJDK6) datasource.getConnection();
 
-				String SQL = "select " + " expirationdate, token from ADVISORUSERTOKEN " + " where iduser = " + idUser
+				String SQL = "select " + " expirationdate, lastupdate, token from ADVISORUSERTOKEN " + " where iduser = " + idUser
 						+ " and CAST(EXPIRATIONDATE AS DATETIME) > CAST(GETDATE() AS DATETIME) ";
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(SQL);
@@ -42,6 +43,7 @@ public class UserTokenDAO {
 				while (rs.next()) {
 					bean = new TokenUserBean();
 					bean.setExpirationdate(rs.getTimestamp("expirationdate"));
+					bean.setLastUpdate(rs.getTimestamp("lastupdate"));
 					bean.setIdUser(idUser);
 					bean.setToken(rs.getString("token"));
 					break;
@@ -259,6 +261,18 @@ public class UserTokenDAO {
 				}
 		}
 		return resultado;
+	}
+
+	public boolean isTokenValid(String token, Integer idUser) throws NamingException, SQLException {
+		boolean isValid = false;
+	
+		TokenUserBean userToken = this.obtenerTokenUserJNDI(idUser);
+		if (userToken != null) {
+			boolean isNotExpired = ((Timestamp) userToken.getExpirationdate()).getTime() > System.currentTimeMillis();
+			isValid = token != null && token.equals(userToken.getToken()) && isNotExpired;
+		}
+	
+		return isValid;
 	}
 
 }
