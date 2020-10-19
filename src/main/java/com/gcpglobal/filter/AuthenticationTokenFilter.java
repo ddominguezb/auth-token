@@ -106,7 +106,7 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									LOG.info("URI del contexto:" + contextURI);
 									LOG.info("URI del payload:" + payloadURI);
 
-									if (contextURI.equals(payloadURI)) {
+									if (contextURI.equals(payloadURI) || contextURI.equals(payloadURI.substring(0, payloadURI.length()-1))) {
 										long diff = System.currentTimeMillis() - ((Timestamp)userToken.getLastUpdate()).getTime(); 
 										LOG.info("URI valida!!!");
 										// Update token in database only after 10 minutes since last update
