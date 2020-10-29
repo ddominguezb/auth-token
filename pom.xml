@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gcpglobal</groupId>
 	<artifactId>auth-token</artifactId>
-	<version>2.0.1</version>
+	<version>3.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version>1.7</java-version>
+		<java-version>1.8</java-version>
 		<version.resteasy>3.0.18.Final</version.resteasy>
 		<version.jjwt>0.7.0</version.jjwt>
 		<spring.version>3.1.1.RELEASE</spring.version>
@@ -88,7 +88,7 @@
 <dependency>
     <groupId>org.jboss.ironjacamar</groupId>
     <artifactId>ironjacamar-jdbc</artifactId>
-    <version>1.0.23.Final</version>
+			<version>1.4.10.Final</version>
 </dependency>
 
 
@@ -103,8 +103,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>${java-version}</source>
+	                    <target>${java-version}</target>
 					</configuration>
 				</plugin>
 			</plugins>

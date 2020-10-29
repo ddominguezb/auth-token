@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.jboss.jca.adapters.jdbc.jdk6.WrappedConnectionJDK6;
+import org.jboss.jca.adapters.jdbc.jdk8.WrappedConnectionJDK8;
 
 import com.gcpglobal.beans.TokenUserBean;
 
@@ -33,7 +33,7 @@ public class UserTokenDAO {
 			DataSource datasource = (DataSource) initialContext.lookup(DATA_SOURCE_CONTEXT);
 
 			if (datasource != null) {
-				con = (WrappedConnectionJDK6) datasource.getConnection();
+				con = (WrappedConnectionJDK8) datasource.getConnection();
 
 				String SQL = "select " + " expirationdate, lastupdate, token from ADVISORUSERTOKEN " + " where iduser = " + idUser
 						+ " and CAST(EXPIRATIONDATE AS DATETIME) > CAST(GETDATE() AS DATETIME) ";
@@ -88,7 +88,7 @@ public class UserTokenDAO {
 			Context initialContext = new InitialContext();
 			DataSource datasource = (DataSource) initialContext.lookup(DATA_SOURCE_CONTEXT);
 			if (datasource != null) {
-				con = (WrappedConnectionJDK6) datasource.getConnection();
+				con = (WrappedConnectionJDK8) datasource.getConnection();
 				Calendar cal = Calendar.getInstance();
 				cal.add(Calendar.MINUTE, minutesTimeout);
 				java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
@@ -145,7 +145,7 @@ public class UserTokenDAO {
 			Context initialContext = new InitialContext();
 			DataSource datasource = (DataSource) initialContext.lookup(DATA_SOURCE_CONTEXT);
 			if (datasource != null) {
-				con = (WrappedConnectionJDK6) datasource.getConnection();
+				con = (WrappedConnectionJDK8) datasource.getConnection();
 				stmt = con.createStatement();
 				return stmt.execute(SQL);
 			} else {
@@ -182,7 +182,7 @@ public class UserTokenDAO {
 			Context initialContext = new InitialContext();
 			DataSource datasource = (DataSource) initialContext.lookup(DATA_SOURCE_CONTEXT);
 			if (datasource != null) {
-				con = (WrappedConnectionJDK6) datasource.getConnection();
+				con = (WrappedConnectionJDK8) datasource.getConnection();
 				String SQL = " select COUNT(*) as rows from ADVISORUSERTOKEN where iduser=" + idUser;
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(SQL);
@@ -231,7 +231,7 @@ public class UserTokenDAO {
 			Context initialContext = new InitialContext();
 			DataSource datasource = (DataSource) initialContext.lookup(DATA_SOURCE_CONTEXT);
 			if (datasource != null) {
-				con = (WrappedConnectionJDK6) datasource.getConnection();
+				con = (WrappedConnectionJDK8) datasource.getConnection();
 				Calendar cal = Calendar.getInstance();
 				cal.add(Calendar.MINUTE, minutesTimeout);
 				java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
