@@ -2,6 +2,8 @@ package com.gcpglobal.filter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -16,12 +18,15 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.gcpglobal.beans.TokenUserBean;
+import com.gcpglobal.util.Constants;
 import com.gcpglobal.util.SpringApplicationContext;
 import com.gcpglobal.util.UserTokenDAO;
 import com.google.gson.JsonObject;
@@ -105,8 +110,16 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									
 									LOG.info("URI del contexto:" + contextURI);
 									LOG.info("URI del payload:" + payloadURI);
+									
+									URI uriContextURI = URI.create(contextURI).normalize();
+									URI uriPayloadURI = URI.create(payloadURI).normalize();
+									
+									String gatewayHeader = requestContext.getHeaderString(Constants.GATEWAY_HEADER);
+									
+									boolean isValidPath=(StringUtils.isNotBlank(gatewayHeader))?
+											uriContextURI.getPath().contentEquals(uriPayloadURI.getPath()):false;
 
-									if (contextURI.equals(payloadURI)) {
+									if (contextURI.equals(payloadURI) || isValidPath) {
 										long diff = System.currentTimeMillis() - ((Timestamp)userToken.getLastUpdate()).getTime(); 
 										LOG.info("URI valida!!!");
 										// Update token in database only after 10 minutes since last update
@@ -147,7 +160,6 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 						LOG.error(e);
 						requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 					}
-
 				} else {
 					LOG.error("NO se ha recibido usuario dentro del payload");
 					requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
@@ -158,6 +170,20 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 			LOG.info("NO se evalua token");
 		}
 
+	}
+	
+	
+	public static void main(String ar[]) throws URISyntaxException {
+		String stringContextURI ="https://localhost:400/Grc/rest/oa/assetTypeWS/responses/63";
+		String stringPayloadURI ="https://orcatest.orcagrccloud.com/Grc/rest/oa/assetTypeWS/responses/63";
+		URI uriContextURI = URI.create(stringContextURI).normalize();
+		URI uriPayloadURI = URI.create(stringPayloadURI).normalize();
+		
+		System.out.println(uriContextURI.getPath().contentEquals(uriPayloadURI.getPath()));
+//		System.out.println(uriPayloadURI.getPath());
+//		var result = Uri.Compare(uri1, uri2, 
+//		        UriComponents.Host | UriComponents.PathAndQuery, 
+//		        UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
 	}
 
 	public String encode(String key, String data) {
