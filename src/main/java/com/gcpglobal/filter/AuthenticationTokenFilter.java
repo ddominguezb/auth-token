@@ -114,8 +114,8 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									
 									boolean isValidPath =false;
 									
-									String gatewayHeader =Constants.GATEWAY_HEADER;requestContext.getHeaderString(Constants.GATEWAY_HEADER);
-									if(StringUtils.isNotBlank(gatewayHeader) && Constants.GATEWAY_HEADER.equalsIgnoreCase(Constants.GATEWAY_HEADER)){
+									String gatewayHeader =requestContext.getHeaderString(Constants.GATEWAY_HEADER);
+									if(StringUtils.isNotBlank(gatewayHeader)){
 										URI uriContextURI = URI.create(URLUtils.encodeQueryNameOrValue(contextURI)).normalize();
 										URI uriPayloadURI = URI.create(URLUtils.encodeQueryNameOrValue(payloadURI)).normalize();
 										isValidPath =uriContextURI.getPath().contentEquals(uriPayloadURI.getPath());
