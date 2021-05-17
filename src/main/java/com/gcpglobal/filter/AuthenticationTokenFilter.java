@@ -24,6 +24,7 @@ import javax.ws.rs.ext.Provider;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.jboss.resteasy.util.URLUtils;
 
 import com.gcpglobal.beans.TokenUserBean;
 import com.gcpglobal.util.Constants;
@@ -111,13 +112,15 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 									LOG.info("URI del contexto:" + contextURI);
 									LOG.info("URI del payload:" + payloadURI);
 									
-									URI uriContextURI = URI.create(contextURI).normalize();
-									URI uriPayloadURI = URI.create(payloadURI).normalize();
+									boolean isValidPath =false;
 									
-									String gatewayHeader = requestContext.getHeaderString(Constants.GATEWAY_HEADER);
-									
-									boolean isValidPath=(StringUtils.isNotBlank(gatewayHeader))?
-											uriContextURI.getPath().contentEquals(uriPayloadURI.getPath()):false;
+									String gatewayHeader =Constants.GATEWAY_HEADER;requestContext.getHeaderString(Constants.GATEWAY_HEADER);
+									if(StringUtils.isNotBlank(gatewayHeader) && Constants.GATEWAY_HEADER.equalsIgnoreCase(Constants.GATEWAY_HEADER)){
+										URI uriContextURI = URI.create(URLUtils.encodeQueryNameOrValue(contextURI)).normalize();
+										URI uriPayloadURI = URI.create(URLUtils.encodeQueryNameOrValue(payloadURI)).normalize();
+										isValidPath =uriContextURI.getPath().contentEquals(uriPayloadURI.getPath());
+									}
+
 
 									if (contextURI.equals(payloadURI) || isValidPath) {
 										long diff = System.currentTimeMillis() - ((Timestamp)userToken.getLastUpdate()).getTime(); 
