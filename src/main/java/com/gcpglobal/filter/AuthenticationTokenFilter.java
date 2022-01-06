@@ -46,7 +46,6 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 		Byte tokenEnabled = (Byte) SpringApplicationContext.getBean("tokenEnabled");
 		Integer timeOut  = (Integer) SpringApplicationContext.getBean("expirationTime");
 		UserTokenDAO tokenDAO = new UserTokenDAO();
-		LOG.info(" *****  @AuthenticationToken");
 
 		if (tokenEnabled != null && tokenEnabled.byteValue() == 1) {
 			// Se Obtiene el encabezado de la peticion
@@ -169,10 +168,7 @@ public class AuthenticationTokenFilter implements ContainerRequestFilter {
 				}
 			}
 
-		} else {
-			LOG.info("NO se evalua token");
 		}
-
 	}
 	
 	
